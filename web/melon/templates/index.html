@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>일간 순위</title>
+        <link rel="stylesheet" href="{% static 'css/common.css' %}" charset="UTF-8">
+    </head>
+    <body>
+    <!-- Header Nav -->
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <!--<a class="navbar-brand" href="#">Home</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>-->
+                <li><a href="/daily/">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="/isgather/">Crawling!</a></li>
+                {% else %}
+                {% endif %}
+                <li><a href="/isgather/">Crawling!</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                {% if user.is_active %}
+                <li><a href="/accounts/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% else %}
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Main Contents -->
+        <div class="container">
+            <div class="row">
+                <!-- Search -->
+                <div class="col-md-12">
+                    <form action="#" method="get">
+                        <div class="input-group">
+                            <input class="form-control" id="system-search" placeholder="Search for" required>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- Rank -->
+                    <table class="table table-list-search text-center">
+                     <caption>
+                         <h1>{{chart_date|date:"Y년 m월 d일"}}</h1>
+                         <h2>종합순위</h2>
+                         <ul class="pagination pull-right">
+                          {% if current_page > 1 %}
+                          <li><a href="/daily/{{ priv_page }}"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                          <li><a><span class="glyphicon glyphicon-minus"></span></a></li>
+                          {% endif %}
+                          {% if next_page != -1 %}
+                          <li><a><span class="glyphicon glyphicon-minus"></span></a></li>
+                          <li><a href="/daily/{{ next_page }}"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                          {% endif %}
+                        </ul>
+                     </caption>
+                    <thead>
+                        <tr>
+                            <th width="5%">순위</th>
+                            <th width="15%"></th>
+                            <th width="20%">가수</th>
+                            <th width="30%">제목</th>
+                            <th width="40%" class="hidden-xs">앨범</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in ranks %}
+                        <tr>
+                            <td>{{song.rank}}</td>
+                            <td>
+                                <img alt="thumbnail" src="{{song.albumImg}}">
+                            </td>
+                            <td>{{song.singer}}</td>
+                            <td>
+                                <strong>{{song.title}}</strong>
+                            </td>
+                            <td class="hidden-xs">{{song.album}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                 </table>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="container-fluid text-center">
+            <p></p>
+        </footer>
+        <!-- Scirpt load -->
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- BootStrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" charset="UTF-8">
+        <script type="text/javascript" src="{% static 'js/rank.js' %}" charset="UTF-8"></script>
+    </body>
+</html>

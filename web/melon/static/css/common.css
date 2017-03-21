@@ -1,0 +1,9 @@
+.btn-font {
+	font-family: sans-serif;
+	font-size: 18px;
+	font-weight: 350;
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}

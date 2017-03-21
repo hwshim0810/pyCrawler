@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>일간 순위</title>
+        <link rel="stylesheet" href="{% static 'css/common.css' %}" charset="UTF-8">
+    </head>
+    <body>
+    <!-- Header Nav -->
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <!--<a class="navbar-brand" href="#">Home</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>-->
+                <li><a href="/daily/">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Main Contents -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    {% if form.errors %}
+                    <p>정보가 일치하지 않습니다.</p>
+                    {% endif %}
+                    <form method="post" class="form-horizontal" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ next }}" />
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success btn-font">로그인</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="container-fluid text-center">
+            <!-- Button Area -->
+            <div class="btndiv">
+                <div class="pull-right">
+                    <button class="btn btn-info btn-font" id="btnback" type="button">뒤로</button>
+                    <button class="btn btn-primary btn-font" id="btntoindex" type="button">홈으로</button>
+                </div>
+            </div>
+        </footer>
+        <!-- Scirpt load -->
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- BootStrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" charset="UTF-8">
+        <!-- page Script -->
+        <script type="text/javascript" src="{% static 'js/rank.js' %}" charset="UTF-8"></script>
+    </body>
+</html>
