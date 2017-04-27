@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
-import requests
-from bs4 import BeautifulSoup
+from .worker.worker import gathering
 from melon.models import DailyRank
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from django.contrib.auth.decorators import login_required
 
-
-def gathering():
-    url = "http://www.melon.com/chart/day/index.htm"
-    src = requests.get(url)
-    souped = BeautifulSoup(src.text, 'lxml')
-    return souped
 
 # Create your views here.
 def index(request, page=1):
