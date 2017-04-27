@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <script type="text/javascript">
-        if (confirm('수집을 시작합니까?') == true ) {
-           location.href = '/dogather/';
-        } else {
-            history.back();
-        }
-    </script>
-</body>
-</html>
+{% extends "alertbase.html" %}
+{% block title %} 일간순위 {% endblock title %}
+{% block content %}
+<script type="text/javascript">
+    if (confirm('수집을 시작합니까?') == true ) {
+       location.href = '/dogather/';
+    } else {
+        history.back();
+    }
+</script>
+{% endblock content %}
