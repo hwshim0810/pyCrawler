@@ -18,6 +18,7 @@ class DailyRank(models.Model):
         return self.title
 
 
+# get ranks from DB
 def get_daily(page):
     per_page = 100
     start_num = (page - 1) * 100
@@ -36,6 +37,7 @@ def get_daily(page):
             'total_page': total_page}
 
 
+# parse html
 def parse(html):
     # 순위
     rank_spans = html.find_all('span', {'class': "rank"})
@@ -67,12 +69,26 @@ def parse(html):
     for link in album_divs:
         edited_album.append(link.a.text)
 
+    return put_ranks({
+        'rank': edited_rank, 'singer': edited_singer,
+        'title': edited_title, 'album': edited_album, 'albumImg': edited_img})
+
+
+def put_ranks(res):
+    edited_rank = res['rank']
+    edited_singer = res['singer']
+    edited_title = res['title']
+    edited_album = res['album']
+    edited_img = res['albumImg']
+
     for i in range(0, 100):
         song = DailyRank(
             rank=int(edited_rank[i]), singer=edited_singer[i],
             title=edited_title[i], album=edited_album[i], albumImg=edited_img[i])
         try:
             song.save()
-            return True
         except Error:
             return False
+
+    return True
+
