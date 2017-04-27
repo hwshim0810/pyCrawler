@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import requests
-import math
 from bs4 import BeautifulSoup
 from melon.models import DailyRank
 from django.shortcuts import render
@@ -15,29 +14,10 @@ def gathering():
     souped = BeautifulSoup(src.text, 'lxml')
     return souped
 
-
-def get_dailydata(page):
-    per_page = 100
-    start_num = (page-1) * 100
-    end_num = start_num + per_page
-    next_page = page + 1
-
-    total_page = int(math.ceil(float(DailyRank.objects.all().count() / per_page)))
-    if total_page == 0:
-        total_page = 1
-
-    if next_page > total_page:
-        next_page = -1
-
-    return {'ranks': DailyRank.objects.all().order_by('-crawledDate', 'rank')[start_num:end_num],
-            'next_page': next_page,
-            'total_page': total_page}
-
-
 # Create your views here.
 def index(request, page=1):
     page = int(page)
-    result = get_dailydata(page)
+    result = DailyRank.get_dailydata(DailyRank, page)
     ranks = result['ranks']
     crawled_date = ''
 
@@ -65,9 +45,6 @@ def is_gather(request):
 @login_required(login_url='/accounts/login/')
 def do_gather(request):
     html = gathering()
-
-    # 차트날짜
-    chart_date = html.find_all('span', {'class': "datelk"})[0].text
 
     # 순위
     rank_spans = html.find_all('span', {'class': "rank"})
