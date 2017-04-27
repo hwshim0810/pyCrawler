@@ -11,3 +11,6 @@
 2. Django의 옵션설정이 서툴렀음
 - 아직 python의 기초가 부족한데 Framework를 다루려고 해서 그런것 같다. 좀 더 공부가 필요함.
 - prototype은 만들었지만 지속적 수정이 필요할 것으로 보인다.
+
+### Update
+- 공통 템플릿으로 묶고, View에 있던 model관련 Process를 분리함 (2017.04.27)
